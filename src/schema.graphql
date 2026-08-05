@@ -1,0 +1,30 @@
+# The existing schema is provided below for context.
+# Your task is to propose the GraphQL mutation required to implement the portfolio renaming.
+
+type Query {
+  portfolio(portfolioId: ID!): Portfolio
+}
+
+type Portfolio {
+  id: ID!
+  cashAccount: CashAccount
+  postOnboardingInfo: PostOnboardingInfo!
+  securitiesAccountNumber: String
+  custodianBankBIC: String
+  personalizations: ProductPersonalization
+}
+
+type CashAccount {
+  iban: String
+  bic: String
+}
+
+type PostOnboardingInfo {
+  id: ID!
+  allStepsCompleted: Boolean!
+}
+
+type ProductPersonalization {
+  id: ID!
+  name: String!
+}
