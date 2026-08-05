@@ -36,13 +36,12 @@ const BackButton = styled.a`
 
 const MainSection = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: calc(var(--spacing) * 4);
 `;
 
 export default function ProductDetails() {
   return (
-    <div>
+    <>
       <Header>
         <BackButton href="/" aria-label={"Go Back"}>
           {"<"}
@@ -56,6 +55,6 @@ export default function ProductDetails() {
           <SecuritiesAccount />
         </div>
       </MainSection>
-    </div>
+    </>
   );
 }
