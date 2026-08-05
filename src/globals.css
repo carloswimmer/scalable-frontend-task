@@ -10,9 +10,12 @@
   --white-5: rgba(255, 255, 255, 0.05);
   --white-10: rgba(255, 255, 255, 0.1);
   --white-60: rgba(255, 255, 255, 0.6);
+  --white-80: rgba(255, 255, 255, 0.8);
   --woodsmoke: #101112;
-  --emerald: #3ddc97;
-  --blush: #f79880;
+  --emerald: rgb(61, 220, 151);
+  --emerald-80: rgb(61, 220, 151, 0.8);
+  --blush: rgb(247, 152, 128);
+  --blush-80: rgb(247, 152, 128, 0.8);
 
   --large: 960px;
 }
