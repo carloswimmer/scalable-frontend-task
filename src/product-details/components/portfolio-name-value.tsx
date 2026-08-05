@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
-import { Pencil } from "../../assets/Pencil";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { Pencil as PencilIcon } from "../../assets/Pencil";
 import styled from "styled-components";
-import { Save } from "../../assets/Save";
-import { Cancel } from "../../assets/Cancel";
+import { Save as SaveIcon } from "../../assets/Save";
+import { Cancel as CancelIcon } from "../../assets/Cancel";
 
 const personalizations = { name: "Broker Portfolio" };
 
@@ -54,6 +54,13 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
   const [isEditing, setIsEditing] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current?.focus()
+      inputRef.current?.select()
+    }
+  }, [isEditing])
+
   const handleSaveName = () => {
     const newName = inputRef.current?.value.trim()
     
@@ -64,19 +71,37 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
     setIsEditing(false)
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSaveName()
+    }
+
+    if (e.key === 'Escape') {
+      setIsEditing(false)
+    }
+  }
+
   return (
     <EditBlock>
       {isEditing ? (
         <>
-        <Input ref={inputRef} defaultValue={name} />
-        <SaveButton onClick={handleSaveName}><Save /></SaveButton>
-        <CancelButton onClick={() => setIsEditing(false)}><Cancel /></CancelButton>
+        <Input 
+          ref={inputRef} 
+          defaultValue={name} 
+          onKeyDown={handleKeyDown}
+        />
+        <SaveButton onClick={handleSaveName}>
+          <SaveIcon />
+        </SaveButton>
+        <CancelButton onClick={() => setIsEditing(false)}>
+          <CancelIcon />
+        </CancelButton>
       </>
       ) : (
         
         <>
         <span>{name}</span>
-        <Button onClick={() => setIsEditing(true)}><Pencil /></Button>
+        <Button onClick={() => setIsEditing(true)}><PencilIcon /></Button>
       </>
       )}
     </EditBlock>
