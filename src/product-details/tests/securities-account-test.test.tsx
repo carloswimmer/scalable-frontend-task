@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { SecuritiesAccount } from "./securities-account";
+import { SecuritiesAccount } from "../components/securities-account";
 
 import "@testing-library/jest-dom";
 

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { PortfolioName } from "./portfolio-name";
+import { PortfolioName } from "../components/portfolio-name";
 
 import "@testing-library/jest-dom";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { SecuritiesAccount } from "./securities-account";
-import { CashAccount } from "./cash-account";
-import { PortfolioName } from "./portfolio-name";
+import { SecuritiesAccount } from "./components/securities-account";
+import { CashAccount } from "./components/cash-account";
+import { PortfolioName } from "./components/portfolio-name";
 
 const Header = styled.div`
   margin-top: calc(var(--spacing) * 5);
