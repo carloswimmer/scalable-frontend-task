@@ -4,11 +4,14 @@ import styled from "styled-components";
 import { Save as SaveIcon } from "../../assets/Save";
 import { Cancel as CancelIcon } from "../../assets/Cancel";
 
-const personalizations = { name: "Broker Portfolio" };
+interface PortfolioNameValueProps {
+  initialState: string,
+}
 
-export const PortfolioNameValue: React.FunctionComponent = () => {
-  const [name, setName] = useState(personalizations.name)
+export const PortfolioNameValue = ({ initialState }: PortfolioNameValueProps) => {
+  const [name, setName] = useState(initialState)
   const [isEditing, setIsEditing] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -30,16 +33,28 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
       inputRef.current.value = name
     }
     setIsEditing(false)
+    setErrorMessage('')
   }
 
   const handleSaveName = () => {
     const newName = inputRef.current?.value.trim()
 
-    if (newName && newName !== name) {
+    if (!newName || newName.length < 3) {
+      setErrorMessage('Minimum of 3 characters')
+      return
+    }
+
+    if (newName.length > 50) {
+      setErrorMessage('Maximum of 50 characters')
+      return
+    }
+
+    if (newName !== name) {
       setName(newName)
     }
 
     setIsEditing(false)
+    setErrorMessage('')
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -67,7 +82,14 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
             tabIndex={isEditing ? 0 : -1}
             aria-hidden={!isEditing}
             aria-label="Portfolio name"
+            aria-invalid={!!errorMessage}
+            aria-describedby={errorMessage ? 'portfolio-name-error' : undefined}
           />
+          {errorMessage && (
+            <ErrorMessage id="portfolio-name-error" role="alert">
+              {errorMessage}
+            </ErrorMessage>
+          )}
         </InputWrapper>
       </ContentSlot>
 
@@ -75,6 +97,7 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
         <ActionGroup $visible={!isEditing} aria-hidden={isEditing}>
           <div>
             <EditButton 
+              type="button"
               onClick={openEdit} 
               tabIndex={isEditing ? -1 : 0}
               aria-label="Edit portfolio name"
@@ -87,6 +110,7 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
         <ActionGroup $visible={isEditing} aria-hidden={!isEditing}>
           <div>
             <SaveButton 
+              type="button"
               onClick={handleSaveName} 
               tabIndex={isEditing ? 0 : -1} 
               aria-label="Save portfolio name"
@@ -94,6 +118,7 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
               <SaveIcon />
             </SaveButton>
             <CancelButton 
+              type="button"
               onClick={closeEdit} 
               tabIndex={isEditing ? 0 : -1}
               aria-label="Cancel editing portfolio name"
@@ -210,4 +235,11 @@ const InputWrapper = styled.div<{ $expanded: boolean }>`
   opacity: ${({ $expanded }) => ($expanded ? 1 : 0)};
   transition: max-width 0.3s ease, opacity 0.2s ease;
   overflow: hidden;
+`
+
+const ErrorMessage = styled.p`
+  color: var(--blush);
+  font-weight: var(--font-weight-normal);
+  padding-top: calc(var(--spacing) * 0.5);
+  padding-inline: calc(var(--spacing) * 1.5);
 `

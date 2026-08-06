@@ -15,6 +15,7 @@ export const Cancel = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-x-icon lucide-x"
+      aria-hidden="true"
     >
       <title>{titleText}</title>
       <path d="M18 6 6 18"/>

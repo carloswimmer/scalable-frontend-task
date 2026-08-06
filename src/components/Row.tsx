@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const RowContent = styled.div`
   display: flex;
-  padding: 16px 0;
+  padding-block: calc(var(--spacing) * 1.5);
   align-items: center;
   gap: calc(var(--spacing) * 2);
   flex: 1 0 0;
