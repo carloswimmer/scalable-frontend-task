@@ -94,7 +94,7 @@ export const PortfolioNameValue = ({ initialState }: PortfolioNameValueProps) =>
       </ContentSlot>
 
       <ActionsSlot>
-        <ActionGroup $visible={!isEditing} aria-hidden={isEditing}>
+        <ActionGroup $visible={!isEditing}>
           <div>
             <EditButton 
               type="button"
@@ -107,7 +107,7 @@ export const PortfolioNameValue = ({ initialState }: PortfolioNameValueProps) =>
           </div>
         </ActionGroup>
 
-        <ActionGroup $visible={isEditing} aria-hidden={!isEditing}>
+        <ActionGroup $visible={isEditing}>
           <div>
             <SaveButton 
               type="button"
