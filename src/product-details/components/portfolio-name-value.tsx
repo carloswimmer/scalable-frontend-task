@@ -66,6 +66,7 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
             onKeyDown={handleKeyDown}
             tabIndex={isEditing ? 0 : -1}
             aria-hidden={!isEditing}
+            aria-label="Portfolio name"
           />
         </InputWrapper>
       </ContentSlot>
@@ -73,18 +74,30 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
       <ActionsSlot>
         <ActionGroup $visible={!isEditing} aria-hidden={isEditing}>
           <div>
-            <Button onClick={openEdit} tabIndex={isEditing ? -1 : 0}>
+            <EditButton 
+              onClick={openEdit} 
+              tabIndex={isEditing ? -1 : 0}
+              aria-label="Edit portfolio name"
+            >
               <EditIcon />
-            </Button>
+            </EditButton>
           </div>
         </ActionGroup>
 
         <ActionGroup $visible={isEditing} aria-hidden={!isEditing}>
           <div>
-            <SaveButton onClick={handleSaveName} tabIndex={isEditing ? 0 : -1}>
+            <SaveButton 
+              onClick={handleSaveName} 
+              tabIndex={isEditing ? 0 : -1} 
+              aria-label="Save portfolio name"
+            >
               <SaveIcon />
             </SaveButton>
-            <CancelButton onClick={closeEdit} tabIndex={isEditing ? 0 : -1}>
+            <CancelButton 
+              onClick={closeEdit} 
+              tabIndex={isEditing ? 0 : -1}
+              aria-label="Cancel editing portfolio name"
+            >
               <CancelIcon />
             </CancelButton>
           </div>
@@ -150,11 +163,14 @@ const ActionGroup = styled.div<{ $visible: boolean }>`
 `
 
 const Button = styled.button`
-  color: var(--white-60);
   background: transparent;
   border: none;
   cursor: pointer;
   flex-shrink: 0;
+`
+
+const EditButton = styled(Button)`
+  color: var(--white-60);
 
   &:hover {
     color: var(--white-80);
