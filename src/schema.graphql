@@ -28,3 +28,29 @@ type ProductPersonalization {
   id: ID!
   name: String!
 }
+
+type Mutation {
+  updatePortfolioPersonalization(
+    input: UpdatePortfolioPersonalizationInput!
+  ): UpdatePortfolioPersonalizationPayload
+}
+
+input UpdatePortfolioPersonalizationInput {
+  portfolioId: ID!
+  name: String!
+}
+
+type UpdatePortfolioPersonalizationPayload {
+  portfolio: Portfolio
+  errors: [PortfolioPersonalizationError!]!
+}
+
+type PortfolioPersonalizationError {
+  field: PortfolioPersonalizationErrorField!
+  message: String!
+}
+
+enum PortfolioPersonalizationErrorField {
+  PORTFOLIO_ID
+  NAME
+}
