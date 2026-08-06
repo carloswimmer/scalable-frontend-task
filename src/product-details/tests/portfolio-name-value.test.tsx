@@ -34,7 +34,7 @@ describe('PortfolioNameValue', () => {
 
   beforeEach(() => {
     user = userEvent.setup()
-    render(<PortfolioNameValue/>)
+    render(<PortfolioNameValue initialState="Broker Portfolio"/>)
   })
 
   it('renders the initial portfolio name', () => {
@@ -106,5 +106,27 @@ describe('PortfolioNameValue', () => {
     await user.click(getSaveButton(screen))
 
     expect(screen.getByText('Broker Portfolio')).toBeInTheDocument()
+  })
+
+  it('shows an error when try to save name with less than 3 caracters', async () => {
+    await enterEditMode(user)
+
+    const input = getInput(screen)
+    await user.clear(input)
+    await user.type(input, 'BP')
+    await user.click(getSaveButton(screen))
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Minimum of 3 characters')
+  })
+
+  it('shows an error when try to save name with more than 50 caracters', async () => {
+    await enterEditMode(user)
+
+    const input = getInput(screen)
+    await user.clear(input)
+    await user.type(input, '0123456789 0123456789 0123456789 0123456789 0123456789')
+    await user.click(getSaveButton(screen))
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Maximum of 50 characters')
   })
 })
