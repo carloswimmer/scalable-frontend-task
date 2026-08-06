@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Pencil = () => {
-  const titleText = "Edit Portfolio Name";
 
   return (
     <svg
@@ -11,7 +10,6 @@ export const Pencil = () => {
       viewBox="0 0 24 24"
       role="img"
     >
-      <title>{titleText}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

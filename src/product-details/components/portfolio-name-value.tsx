@@ -61,19 +61,20 @@ export const PortfolioNameValue: React.FunctionComponent = () => {
               ref={inputRef} 
               defaultValue={name} 
               onKeyDown={handleKeyDown}
+              aria-label="Portfolio name"
             />
           </InputWrapper>
-          <SaveButton $visible={isExpanded} onClick={handleSaveName}>
+          <SaveButton $visible={isExpanded} onClick={handleSaveName} aria-label="Save portfolio name">
             <SaveIcon />
           </SaveButton>
-          <CancelButton $visible={isExpanded} onClick={() => setIsExpanded(false)}>
+          <CancelButton $visible={isExpanded} onClick={() => setIsExpanded(false)} aria-label="Cancel editing portfolio name">
             <CancelIcon />
           </CancelButton>
         </>
       ) : (
         <>
           <span>{name}</span>
-          <Button onClick={openEdit}><EditIcon /></Button>
+          <Button onClick={openEdit} aria-label="Edit portfolio name"><EditIcon /></Button>
         </>
       )}
     </EditBlock>
