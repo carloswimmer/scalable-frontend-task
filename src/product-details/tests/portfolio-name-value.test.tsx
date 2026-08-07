@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react"
+import { render, Screen, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { PortfolioNameValue } from "../components/portfolio-name-value"
 
@@ -15,33 +15,18 @@ const label = {
 
 async function enterEditMode(user: User) {
   await user.click(screen.getByRole('button', { name: label.edit }))
-
-  await act(async () => {
-    await new Promise(resolve => requestAnimationFrame(resolve))
-  })
 }
 
-async function saveEdit(user: User) {
-  await user.click(screen.getByRole('button', { name: label.save }))
-  await completeCollapse(screen.getByRole('textbox', { name: label.input }))
+function getInput(screen: Screen): HTMLInputElement {
+  return screen.getByRole('textbox', { name: label.input })
 }
 
-async function completeCollapse(input: HTMLInputElement) {
-  await act(() => {
-    fireMaxWidthTransitionEnd(input.parentElement!)
-  })
-  expect(screen.queryByRole('textbox', { name: label.input })).not.toBeInTheDocument()
+function getSaveButton(screen: Screen): HTMLButtonElement {
+  return screen.getByRole('button', { name: label.save })
 }
 
-function fireMaxWidthTransitionEnd(element: HTMLElement) {
-  const event = new Event('transitionend', { bubbles: true })
-  Object.defineProperty(event, 'propertyName', { value: 'max-width' })
-  element.dispatchEvent(event)
-}
-
-async function cancelEdit(user: User) {
-  await user.click(screen.getByRole('button', { name: label.cancel }))
-  await completeCollapse(screen.getByRole('textbox', { name: label.input }))
+function getCancelButton(screen: Screen): HTMLButtonElement {
+  return screen.getByRole('button', { name: label.cancel })
 }
 
 describe('PortfolioNameValue', () => {
@@ -49,7 +34,7 @@ describe('PortfolioNameValue', () => {
 
   beforeEach(() => {
     user = userEvent.setup()
-    render(<PortfolioNameValue/>)
+    render(<PortfolioNameValue initialState="Broker Portfolio" onSave={jest.fn()} />)
   })
 
   it('renders the initial portfolio name', () => {
@@ -57,33 +42,33 @@ describe('PortfolioNameValue', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
-  it('enters the edit mode when the edit button is clicked', async () => {
+  it('enters edit mode when the edit button is clicked', async () => {
     await enterEditMode(user)
 
-    expect(screen.getByRole('textbox', { name: label.input })).toHaveValue('Broker Portfolio')
-    expect(screen.getByRole('button', { name: label.save })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: label.cancel })).toBeInTheDocument()
+    expect(getInput(screen)).toHaveValue('Broker Portfolio')
+    expect(getSaveButton(screen)).toBeInTheDocument()
+    expect(getCancelButton(screen)).toBeInTheDocument()
   })
 
   it('saves a new portfolio name', async () => {
     await enterEditMode(user)
 
-    const input = screen.getByRole('textbox', { name: label.input })
+    const input = getInput(screen)
     await user.clear(input)
     await user.type(input, 'Growth Portfolio')
-    await saveEdit(user)
+    await user.click(getSaveButton(screen))
 
     expect(screen.getByText('Growth Portfolio')).toBeInTheDocument()
-    expect(screen.queryByRole('textbox', { name: label.input })).not.toBeInTheDocument()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
   it('cancels editing and keeps the original name', async () => {
     await enterEditMode(user)
 
-    const input = screen.getByRole('textbox', { name: label.input })
+    const input = getInput(screen)
     await user.clear(input)
     await user.type(input, 'Temporary Name')
-    await cancelEdit(user)
+    await user.click(getCancelButton(screen))
 
     expect(screen.getByText('Broker Portfolio')).toBeInTheDocument()
     expect(screen.queryByText('Temporary Name')).not.toBeInTheDocument()
@@ -92,35 +77,56 @@ describe('PortfolioNameValue', () => {
   it('saves when Enter is pressed', async () => {
     await enterEditMode(user)
 
-    const input: HTMLInputElement = screen.getByRole('textbox', { name: label.input })
+    const input = getInput(screen)
     await user.clear(input)
-    await user.type(input, 'Enter Saved')
-    await user.keyboard('{Enter}')
-    await completeCollapse(input)
+    await user.type(input, 'Enter Saved{Enter}')
 
     expect(screen.getByText('Enter Saved')).toBeInTheDocument()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
   it('cancels when Escape is pressed', async () => {
     await enterEditMode(user)
 
-    const input: HTMLInputElement = screen.getByRole('textbox', { name: label.input })
+    const input = getInput(screen)
     await user.clear(input)
     await user.type(input, 'Escape Test')
     await user.keyboard('{Escape}')
-    await completeCollapse(input)
+
+    expect(screen.getByText('Broker Portfolio')).toBeInTheDocument()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  it('does not update the name when saving empty or whitespace-only input', async () => {
+    await enterEditMode(user)
+
+    const input = getInput(screen)
+    await user.clear(input)
+    await user.type(input, '   ')
+    await user.click(getSaveButton(screen))
 
     expect(screen.getByText('Broker Portfolio')).toBeInTheDocument()
   })
 
-  it("does not update the name when saving empty or whitespace-only input", async () => {
-    await enterEditMode(user);
+  it('shows an error when try to save name with less than 3 caracters', async () => {
+    await enterEditMode(user)
 
-    const input = screen.getByRole("textbox", { name: label.input });
-    await user.clear(input);
-    await user.type(input, "   ");
-    await saveEdit(user);
+    const input = getInput(screen)
+    await user.clear(input)
+    await user.type(input, 'BP')
+    await user.click(getSaveButton(screen))
 
-    expect(screen.getByText("Broker Portfolio")).toBeInTheDocument();
-  });
+    expect(screen.getByRole('alert')).toHaveTextContent('Minimum of 3 characters')
+  })
+
+  it('shows an error when try to save name with more than 50 caracters', async () => {
+    await enterEditMode(user)
+
+    const input = getInput(screen)
+    await user.clear(input)
+    await user.type(input, '0123456789 0123456789 0123456789 0123456789 0123456789')
+    await user.click(getSaveButton(screen))
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Maximum of 50 characters')
+  })
 })

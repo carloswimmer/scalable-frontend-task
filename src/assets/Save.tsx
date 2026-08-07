@@ -14,6 +14,7 @@ export const Save = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-check-icon lucide-check"
+      aria-hidden="true"
     >
       <path d="M20 6 9 17l-5-5"/>
     </svg>

@@ -9,6 +9,7 @@ export const Pencil = () => {
       height="24"
       viewBox="0 0 24 24"
       role="img"
+      aria-hidden="true"
     >
       <path
         fillRule="evenodd"

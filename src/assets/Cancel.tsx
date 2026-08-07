@@ -14,6 +14,7 @@ export const Cancel = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-x-icon lucide-x"
+      aria-hidden="true"
     >
       <path d="M18 6 6 18"/>
       <path d="m6 6 12 12"/>
