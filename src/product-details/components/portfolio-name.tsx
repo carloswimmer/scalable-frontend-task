@@ -1,6 +1,6 @@
 import React from "react";
-import { Row } from "../../components/Row";
-import { List } from "../../components/List";
+import { Row } from "../../components/row";
+import { List } from "../../components/list";
 import { PortfolioNameValue } from "./portfolio-name-value";
 
 export const PortfolioName: React.FunctionComponent = () => {

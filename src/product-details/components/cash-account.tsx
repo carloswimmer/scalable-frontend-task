@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import { Row } from "../../components/Row";
-import { List } from "../../components/List";
+import { Row } from "../../components/row";
+import { List } from "../../components/list";
 
 const Header2 = styled.h2`
   font-size: var(--font-size-sm);
