@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Pencil as EditIcon } from "../../assets/Pencil";
 import styled from "styled-components";
 import { Save as SaveIcon } from "../../assets/Save";
@@ -6,9 +6,10 @@ import { Cancel as CancelIcon } from "../../assets/Cancel";
 
 interface PortfolioNameValueProps {
   initialState: string,
+  onSave: (name: string) => void,
 }
 
-export const PortfolioNameValue = ({ initialState }: PortfolioNameValueProps) => {
+export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueProps) => {
   const [name, setName] = useState(initialState)
   const [isEditing, setIsEditing] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -51,6 +52,7 @@ export const PortfolioNameValue = ({ initialState }: PortfolioNameValueProps) =>
 
     if (newName !== name) {
       setName(newName)
+      onSave(newName)
     }
 
     setIsEditing(false)
