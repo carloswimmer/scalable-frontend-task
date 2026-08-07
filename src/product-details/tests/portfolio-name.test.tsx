@@ -12,7 +12,6 @@ describe("PortfolioName", () => {
     expect(screen.getByText("Broker Portfolio")).toBeInTheDocument();
   });
 
-
   it("should save a renamed portfolio", async () => {
     const user = userEvent.setup();
     render(<PortfolioName />);

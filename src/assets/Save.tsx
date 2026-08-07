@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Save = () => {
-  const titleText = "Save Portfolio Name";
 
   return (
     <svg
@@ -17,7 +16,6 @@ export const Save = () => {
       className="lucide lucide-check-icon lucide-check"
       aria-hidden="true"
     >
-      <title>{titleText}</title>
       <path d="M20 6 9 17l-5-5"/>
     </svg>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Cancel = () => {
-  const titleText = "Cancel Portfolio Name Edition";
 
   return (
     <svg
@@ -17,7 +16,6 @@ export const Cancel = () => {
       className="lucide lucide-x-icon lucide-x"
       aria-hidden="true"
     >
-      <title>{titleText}</title>
       <path d="M18 6 6 18"/>
       <path d="m6 6 12 12"/>
     </svg>
