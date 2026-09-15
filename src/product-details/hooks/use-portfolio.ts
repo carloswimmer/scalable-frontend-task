@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client/react";
 import {
   GET_PORTFOLIO,
   UPDATE_PORTFOLIO_PERSONALIZATION,

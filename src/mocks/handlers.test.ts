@@ -26,7 +26,7 @@ describe("GraphQL MSW handlers", () => {
     });
 
     expect(result.error).toBeUndefined();
-    expect(result.data.portfolio).toMatchObject({
+    expect(result.data?.portfolio).toMatchObject({
       id: PORTFOLIO_ID,
       personalizations: { name: "Broker Portfolio" },
       cashAccount: {
@@ -84,7 +84,7 @@ describe("GraphQL MSW handlers", () => {
       fetchPolicy: "network-only",
     });
 
-    expect(queryResult.data.portfolio?.personalizations?.name).toBe(
+    expect(queryResult.data?.portfolio?.personalizations?.name).toBe(
       "Growth Portfolio"
     );
   });

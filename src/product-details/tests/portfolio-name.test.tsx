@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 
 describe("PortfolioName", () => {
   it("should render portfolio name", () => {
-    render(<PortfolioName name="Broker Portfolio" onSave={jest.fn()} />);
+    render(<PortfolioName name="Broker Portfolio" onSave={vi.fn()} />);
 
     expect(screen.getByText("Portfolio name")).toBeInTheDocument();
     expect(screen.getByText("Broker Portfolio")).toBeInTheDocument();
@@ -14,7 +14,7 @@ describe("PortfolioName", () => {
 
   it("should save a renamed portfolio", async () => {
     const user = userEvent.setup();
-    const onSave = jest.fn();
+    const onSave = vi.fn();
 
     render(<PortfolioName name="Broker Portfolio" onSave={onSave} />);
     await user.click(screen.getByRole("button", { name: "Edit portfolio name" }));

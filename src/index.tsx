@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client";
 import ProductDetails from "./product-details/page";
 import "./globals.css";
 import { createApolloClient } from "./graphql/client";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 
 async function enableApiMocking() {
-  if (process.env.REACT_APP_GRAPHQL_MOCK !== "true") {
+  if (import.meta.env.VITE_GRAPHQL_MOCK !== "true") {
     return
   }
 
@@ -33,5 +33,4 @@ enableApiMocking().then(() => {
     </React.StrictMode>
   );
 })
-
 

@@ -1,7 +1,6 @@
-import "./jest.polyfills";
-import "whatwg-fetch";
 import { server } from "./mocks/server";
 import { resetPortfolio } from "./mocks/data";
+import "@testing-library/jest-dom/vitest";
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: "error" });

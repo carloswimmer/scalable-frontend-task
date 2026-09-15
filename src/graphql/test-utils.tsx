@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 import { render, RenderOptions } from "@testing-library/react";
 import { createApolloClient } from "./client";
 

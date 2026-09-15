@@ -7,7 +7,7 @@ import {
 import { getPortfolio, updatePortfolioName } from "./data";
 
 const graphqlApi = graphql.link(
-  process.env.REACT_APP_GRAPHQL_BASE_URL || "http://localhost:4000/graphql"
+  import.meta.env.VITE_GRAPHQL_BASE_URL || "http://localhost:4000/graphql"
 );
 
 export const handlers = [

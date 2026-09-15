@@ -34,7 +34,7 @@ describe('PortfolioNameValue', () => {
 
   beforeEach(() => {
     user = userEvent.setup()
-    render(<PortfolioNameValue initialState="Broker Portfolio" onSave={jest.fn()} />)
+    render(<PortfolioNameValue initialState="Broker Portfolio" onSave={vi.fn()} />)
   })
 
   it('renders the initial portfolio name', () => {
