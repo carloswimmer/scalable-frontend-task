@@ -3,9 +3,16 @@ import { CashAccount } from "../components/cash-account";
 
 import "@testing-library/jest-dom";
 
+const props = {
+  portfolioId: "oCt4GtuDS2YjimboYTBfNu",
+  iban: "DE89370400440532013000",
+  bic: "COBADEFFXXX",
+  allOnboardingStepsCompleted: true,
+};
+
 describe("CashAccount", () => {
   it("renders IBAN and BIC when data is available", () => {
-    render(<CashAccount />);
+    render(<CashAccount {...props} />);
 
     expect(screen.getByRole("heading", { name: "Cash account" })).toBeVisible();
     expect(screen.getByText("IBAN")).toBeVisible();
@@ -15,7 +22,7 @@ describe("CashAccount", () => {
   });
 
   it("renders Cash Balance Allocation link when onboarding is complete", () => {
-    render(<CashAccount />);
+    render(<CashAccount {...props} />);
 
     expect(screen.getByText("Cash Balance Allocation")).toBeVisible();
     const link = screen.getByText("Cash Balance Allocation");

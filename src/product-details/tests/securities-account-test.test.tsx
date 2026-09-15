@@ -5,7 +5,11 @@ import "@testing-library/jest-dom";
 
 describe("SecuritiesAccount", () => {
   it("should display account number and BIC", async () => {
-    render(<SecuritiesAccount />);
+    render(<SecuritiesAccount
+      securitiesAccountNumber="5134823356"
+        custodianBankBIC="SCABDEMMXXX"
+       />
+    );
 
     expect(screen.getByText("Securities account")).toBeVisible();
     expect(screen.getByText("Account number")).toBeVisible();

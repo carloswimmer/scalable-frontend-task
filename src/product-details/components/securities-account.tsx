@@ -11,16 +11,15 @@ const Header2 = styled.h2`
   margin-top: calc(var(--spacing) * 3);
 `;
 
-export const SecuritiesAccount: FunctionComponent = () => {
-  const data = {
-    portfolio: {
-      securitiesAccountNumber: "5134823356",
-      custodianBankBIC: "SCABDEMMXXX",
-    },
-  };
+interface SecuritiesAccountProps {
+  securitiesAccountNumber?: string | null;
+  custodianBankBIC?: string | null;
+}
 
-  const { securitiesAccountNumber, custodianBankBIC } = data?.portfolio ?? {};
-
+export const SecuritiesAccount: FunctionComponent<SecuritiesAccountProps> = ({ 
+  securitiesAccountNumber, 
+  custodianBankBIC 
+}) => {
   return (
     <>
       <Header2 id={"Securities Account"}>{"Securities account"}</Header2>

@@ -39,9 +39,9 @@
     ]
   },
   "jest": {
-  "transformIgnorePatterns": [
-    "/node_modules/(?!(msw|@mswjs|@bundled-es-modules|until-async)/)"
-  ]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(msw|@bundled-es-modules|until-async|rettime)/)"
+    ]
   },
   "browserslist": {
     "production": [
@@ -61,6 +61,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-class-static-block": "^7.29.7",
+    "ajv": "^8.12.0",
     "msw": "^2.7.5"
   }
 }

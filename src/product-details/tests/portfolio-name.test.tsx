@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 
 describe("PortfolioName", () => {
   it("should render portfolio name", () => {
-    render(<PortfolioName />);
+    render(<PortfolioName name="Broker Portfolio" onSave={jest.fn()} />);
 
     expect(screen.getByText("Portfolio name")).toBeInTheDocument();
     expect(screen.getByText("Broker Portfolio")).toBeInTheDocument();
@@ -14,12 +14,16 @@ describe("PortfolioName", () => {
 
   it("should save a renamed portfolio", async () => {
     const user = userEvent.setup();
-    render(<PortfolioName />);
+    const onSave = jest.fn();
+
+    render(<PortfolioName name="Broker Portfolio" onSave={onSave} />);
     await user.click(screen.getByRole("button", { name: "Edit portfolio name" }));
     const input = screen.getByRole("textbox", { name: "Portfolio name" });
     await user.clear(input);
     await user.type(input, "Growth Portfolio");
     await user.click(screen.getByRole("button", { name: "Save portfolio name" }));
+
+    expect(onSave).toHaveBeenCalledWith("Growth Portfolio");
     expect(screen.getByText("Growth Portfolio")).toBeInTheDocument();
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });

@@ -6,7 +6,7 @@ import { Cancel as CancelIcon } from "../../assets/Cancel";
 
 interface PortfolioNameValueProps {
   initialState: string,
-  onSave: (name: string) => void,
+  onSave: (name: string) => Promise<string | void> | string | void,
 }
 
 export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueProps) => {
@@ -37,7 +37,7 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
     setErrorMessage('')
   }
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     const newName = inputRef.current?.value.trim()
 
     if (!newName || newName.length < 3) {
@@ -51,8 +51,12 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
     }
 
     if (newName !== name) {
+      const apiError = await onSave(newName)
+      if (apiError) {
+        setErrorMessage(apiError)
+        return
+      }
       setName(newName)
-      onSave(newName)
     }
 
     setIsEditing(false)

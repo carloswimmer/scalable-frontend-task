@@ -22,25 +22,19 @@ const ClickableRowContent = styled.div`
   font-weight: var(--font-weight-semi-bold);
 `;
 
-const portfolioId = "oCt4GtuDS2YjimboYTBfNu";
-export const CashAccount: FunctionComponent = () => {
-  const data = {
-    portfolio: {
-      cashAccount: {
-        iban: "DE89370400440532013000",
-        bic: "COBADEFFXXX",
-      },
-      postOnboardingInfo: {
-        id: "PostOnboardingInfo-oCt4GtuDS2YjimboYTBfNu",
-        allStepsCompleted: true,
-      },
-    },
-  };
+interface CashAccountProps {
+  portfolioId: string;
+  iban?: string | null;
+  bic?: string | null;
+  allOnboardingStepsCompleted: boolean;
+}
 
-  const { iban, bic } = data?.portfolio?.cashAccount ?? {};
-  const allOnboardingStepsCompleted =
-    data?.portfolio?.postOnboardingInfo?.allStepsCompleted;
-
+export const CashAccount: FunctionComponent<CashAccountProps> = ({ 
+  portfolioId,
+  iban, 
+  bic, 
+  allOnboardingStepsCompleted 
+}) => {
   return (
     <>
       <Header2 id="cash-account">{"Cash account"}</Header2>

@@ -3,20 +3,15 @@ import { Row } from "../../components/row";
 import { List } from "../../components/list";
 import { PortfolioNameValue } from "./portfolio-name-value";
 
-interface Personalizations {
-  name: string
+interface PortfolioNameProps {
+  name: string;
+  onSave: (name: string) => Promise<string | void> | string | void;
 }
 
-export const PortfolioName: React.FunctionComponent = () => {
-  const personalizations = { name: "Broker Portfolio" };
-  const [personalizationsState, setPersonalizationsState] = useState<Personalizations>(personalizations)
-
-  console.log('State saved locally:', personalizationsState)
-
-  const handleSave = (newName: string) => {
-    setPersonalizationsState({ name: newName })
-  }
-
+export const PortfolioName: React.FunctionComponent<PortfolioNameProps> = ({
+  name, 
+  onSave 
+}) => {
   return (
     <>
       <List.Root>
@@ -24,7 +19,7 @@ export const PortfolioName: React.FunctionComponent = () => {
           <Row.Content>
             <Row.Label>Portfolio name</Row.Label>
             <Row.Value>
-              <PortfolioNameValue initialState={personalizations.name} onSave={handleSave} />
+              <PortfolioNameValue initialState={name} onSave={onSave} />
             </Row.Value>
           </Row.Content>
         </List.Item>

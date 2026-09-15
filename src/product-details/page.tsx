@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { SecuritiesAccount } from "./components/securities-account";
 import { CashAccount } from "./components/cash-account";
 import { PortfolioName } from "./components/portfolio-name";
+import { usePortfolio } from "./hooks/use-portfolio";
+import { PORTFOLIO_ID } from "../graphql/constants";
 
 const Header = styled.div`
   margin-top: calc(var(--spacing) * 5);
@@ -39,7 +41,21 @@ const MainSection = styled.section`
   gap: calc(var(--spacing) * 4);
 `;
 
+const StatusMessage = styled.p`
+  color: var(--white);
+`;
+
 export default function ProductDetails() {
+  const { portfolio, loading, error, rename } = usePortfolio(PORTFOLIO_ID)
+  const { 
+    personalizations, 
+    id, 
+    cashAccount, 
+    securitiesAccountNumber, 
+    custodianBankBIC, 
+    postOnboardingInfo,
+  } = portfolio ?? {}
+
   return (
     <>
       <Header>
@@ -49,11 +65,17 @@ export default function ProductDetails() {
         <h1>{"Product Details"}</h1>
       </Header>
       <MainSection>
-        <div>
-          <PortfolioName />
-          <CashAccount />
-          <SecuritiesAccount />
-        </div>
+        {loading && <StatusMessage>Loading product details...</StatusMessage>}
+        {!loading && error && (
+          <StatusMessage role="alert">{error}</StatusMessage>
+        )}
+        {!loading && !error && portfolio && (
+          <div>
+            <PortfolioName name={personalizations?.name ?? ""} onSave={rename} />
+            <CashAccount portfolioId={id ?? ""} iban={cashAccount?.iban} bic={cashAccount?.bic} allOnboardingStepsCompleted={postOnboardingInfo?.allStepsCompleted ?? false} />
+            <SecuritiesAccount securitiesAccountNumber={securitiesAccountNumber} custodianBankBIC={custodianBankBIC} />
+          </div>
+        )}
       </MainSection>
     </>
   );
