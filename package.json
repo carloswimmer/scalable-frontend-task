@@ -38,6 +38,11 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(msw|@mswjs|@bundled-es-modules|until-async)/)"
+  ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -49,5 +54,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "devDependencies": {
+    "msw": "^2.7.5"
   }
 }
