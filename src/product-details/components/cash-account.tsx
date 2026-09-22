@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from "react";
-import styled from "styled-components";
-import { Row } from "../../components/row";
-import { List } from "../../components/list";
+import type { FunctionComponent } from 'react'
+import styled from 'styled-components'
+import { List } from '../../components/list'
+import { Row } from '../../components/row'
 
 const Header2 = styled.h2`
   font-size: var(--font-size-sm);
@@ -9,7 +9,7 @@ const Header2 = styled.h2`
   color: var(--white-60);
   margin-bottom: calc(var(--spacing) * 2);
   margin-top: calc(var(--spacing) * 3);
-`;
+`
 
 const ClickableRowContent = styled.div`
   display: flex;
@@ -20,34 +20,34 @@ const ClickableRowContent = styled.div`
   align-self: stretch;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semi-bold);
-`;
+`
 
 interface CashAccountProps {
-  portfolioId: string;
-  iban?: string | null;
-  bic?: string | null;
-  allOnboardingStepsCompleted: boolean;
+  portfolioId: string
+  iban?: string | null
+  bic?: string | null
+  allOnboardingStepsCompleted: boolean
 }
 
-export const CashAccount: FunctionComponent<CashAccountProps> = ({ 
+export const CashAccount: FunctionComponent<CashAccountProps> = ({
   portfolioId,
-  iban, 
-  bic, 
-  allOnboardingStepsCompleted 
+  iban,
+  bic,
+  allOnboardingStepsCompleted,
 }) => {
   return (
     <>
-      <Header2 id="cash-account">{"Cash account"}</Header2>
-      <List.Root aria-labelledby={"cash-account"}>
+      <Header2 id="cash-account">{'Cash account'}</Header2>
+      <List.Root aria-labelledby={'cash-account'}>
         <List.Item>
           <Row.Content>
-            <Row.Label>{"IBAN"}</Row.Label>
+            <Row.Label>{'IBAN'}</Row.Label>
             <Row.Value>{iban}</Row.Value>
           </Row.Content>
         </List.Item>
         <List.Item>
           <Row.Content>
-            <Row.Label>{"BIC"}</Row.Label>
+            <Row.Label>{'BIC'}</Row.Label>
             <Row.Value>{bic}</Row.Value>
           </Row.Content>
         </List.Item>
@@ -59,12 +59,12 @@ export const CashAccount: FunctionComponent<CashAccountProps> = ({
                 target="_blank"
                 rel="noreferrer"
               >
-                {"Cash Balance Allocation"}
+                {'Cash Balance Allocation'}
               </a>
             </ClickableRowContent>
           </List.Item>
         )}
       </List.Root>
     </>
-  );
-};
+  )
+}

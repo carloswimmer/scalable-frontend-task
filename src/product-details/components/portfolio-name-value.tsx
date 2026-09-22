@@ -1,30 +1,33 @@
-import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Pencil as EditIcon } from "../../assets/Pencil";
-import styled from "styled-components";
-import { Save as SaveIcon } from "../../assets/Save";
-import { Cancel as CancelIcon } from "../../assets/Cancel";
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { Cancel as CancelIcon } from '../../assets/Cancel'
+import { Pencil as EditIcon } from '../../assets/Pencil'
+import { Save as SaveIcon } from '../../assets/Save'
 
 interface PortfolioNameValueProps {
-  initialState: string,
-  onSave: (name: string) => Promise<string | void> | string | void,
+  initialState: string
+  onSave: (name: string) => Promise<string | undefined> | string | undefined
 }
 
-export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueProps) => {
+export const PortfolioNameValue = ({
+  initialState,
+  onSave,
+}: PortfolioNameValueProps) => {
   const [name, setName] = useState(initialState)
   const [isEditing, setIsEditing] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // To keep name as the source of truth, we need to update it when the initial state changes
   useEffect(() => {
-    if (isEditing) {
-      inputRef.current?.focus()
-      inputRef.current?.select()
-    }
-  }, [isEditing])
+    setName(initialState)
+  }, [initialState])
 
   const openEdit = () => {
     if (inputRef.current) {
       inputRef.current.value = name
+      inputRef.current?.focus()
+      inputRef.current?.select()
     }
     setIsEditing(true)
   }
@@ -102,9 +105,9 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
       <ActionsSlot>
         <ActionGroup $visible={!isEditing}>
           <div>
-            <EditButton 
+            <EditButton
               type="button"
-              onClick={openEdit} 
+              onClick={openEdit}
               tabIndex={isEditing ? -1 : 0}
               aria-label="Edit portfolio name"
             >
@@ -115,17 +118,17 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
 
         <ActionGroup $visible={isEditing}>
           <div>
-            <SaveButton 
+            <SaveButton
               type="button"
-              onClick={handleSaveName} 
-              tabIndex={isEditing ? 0 : -1} 
+              onClick={handleSaveName}
+              tabIndex={isEditing ? 0 : -1}
               aria-label="Save portfolio name"
             >
               <SaveIcon />
             </SaveButton>
-            <CancelButton 
+            <CancelButton
               type="button"
-              onClick={closeEdit} 
+              onClick={closeEdit}
               tabIndex={isEditing ? 0 : -1}
               aria-label="Cancel editing portfolio name"
             >

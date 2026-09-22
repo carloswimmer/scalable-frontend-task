@@ -1,7 +1,4 @@
-import React from "react";
-
 export const Cancel = () => {
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,8 +13,8 @@ export const Cancel = () => {
       className="lucide lucide-x-icon lucide-x"
       aria-hidden="true"
     >
-      <path d="M18 6 6 18"/>
-      <path d="m6 6 12 12"/>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
     </svg>
-  );
-};
+  )
+}

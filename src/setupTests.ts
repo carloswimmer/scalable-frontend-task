@@ -1,16 +1,16 @@
-import { server } from "./mocks/server";
-import { resetPortfolio } from "./mocks/data";
-import "@testing-library/jest-dom/vitest";
+import '@testing-library/jest-dom/vitest'
+import { resetPortfolio } from './mocks/data'
+import { server } from './mocks/server'
 
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: "error" });
-});
+  server.listen({ onUnhandledRequest: 'error' })
+})
 
 afterEach(() => {
-  server.resetHandlers();
-  resetPortfolio();
-});
+  server.resetHandlers()
+  resetPortfolio()
+})
 
 afterAll(() => {
-  server.close();
-});
+  server.close()
+})

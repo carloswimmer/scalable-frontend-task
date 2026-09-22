@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const GET_PORTFOLIO = gql`
   query GetPortfolio($portfolioId: ID!) {
@@ -20,7 +20,7 @@ export const GET_PORTFOLIO = gql`
       }
     }
   }
-`;
+`
 
 export const UPDATE_PORTFOLIO_PERSONALIZATION = gql`
   mutation UpdatePortfolioPersonalization($input: UpdatePortfolioPersonalizationInput!) {
@@ -38,4 +38,4 @@ export const UPDATE_PORTFOLIO_PERSONALIZATION = gql`
       }
     }
   }
-`;
+`

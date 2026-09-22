@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_GRAPHQL_BASE_URL: string;
-  readonly VITE_GRAPHQL_MOCK: string;
+  readonly VITE_GRAPHQL_BASE_URL: string
+  readonly VITE_GRAPHQL_MOCK: string
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv;
+  readonly env: ImportMetaEnv
 }

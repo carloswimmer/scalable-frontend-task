@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const ListRoot = styled.ol`
   list-style: none;
@@ -15,7 +15,7 @@ const ListRoot = styled.ol`
     border-bottom-left-radius: calc(var(--spacing) * 1);
     border-bottom-right-radius: calc(var(--spacing) * 1);
   }
-`;
+`
 
 const ListItem = styled.li`
   display: flex;
@@ -25,7 +25,7 @@ const ListItem = styled.li`
   align-items: flex-start;
   align-self: stretch;
   background: var(--Greys-Positive-Jet, #191a1c);
-`;
+`
 
 export const List = {
   Root: ListRoot,
