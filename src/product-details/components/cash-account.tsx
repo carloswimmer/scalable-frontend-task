@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Row } from "../../components/row";
 import { List } from "../../components/list";
@@ -54,13 +55,11 @@ export const CashAccount: FunctionComponent<CashAccountProps> = ({
         {allOnboardingStepsCompleted && (
           <List.Item>
             <ClickableRowContent>
-              <a
-                href={`/cockpit/cash-allocation?portfolioId=${portfolioId}`}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to={`/cockpit/cash-allocation?portfolioId=${portfolioId}`}
               >
                 {"Cash Balance Allocation"}
-              </a>
+              </Link>
             </ClickableRowContent>
           </List.Item>
         )}

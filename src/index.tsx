@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import ProductDetails from "./product-details/page";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./app/routes";
 import "./globals.css";
 import { createApolloClient } from "./graphql/client";
 import { ApolloProvider } from "@apollo/client/react";
@@ -26,9 +27,11 @@ enableApiMocking().then(() => {
   root.render(
     <React.StrictMode>
       <ApolloProvider client={client}>
-        <div className={"container"}>
-          <ProductDetails />
-        </div>
+        <BrowserRouter>
+          <div className={"container"}>
+            <AppRoutes />
+          </div>
+        </BrowserRouter>
       </ApolloProvider>
     </React.StrictMode>
   );

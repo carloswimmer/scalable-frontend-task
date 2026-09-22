@@ -1,13 +1,22 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import ProductDetails from "../page";
 import { renderWithApollo } from "../../graphql/test-utils";
 
 import "@testing-library/jest-dom";
 
+function renderProductDetails() {
+  return renderWithApollo(
+    <MemoryRouter>
+      <ProductDetails />
+    </MemoryRouter>
+  );
+}
+
 describe("ProductDetails", () => {
   it("renders portfolio data from GetPortfolio", async () => {
-    renderWithApollo(<ProductDetails />);
+    renderProductDetails();
 
     expect(await screen.findByText("Broker Portfolio")).toBeInTheDocument();
     expect(screen.getByText("DE89370400440532013000")).toBeInTheDocument();
@@ -16,7 +25,7 @@ describe("ProductDetails", () => {
 
   it("renames the portfolio through the mutation", async () => {
     const user = userEvent.setup();
-    renderWithApollo(<ProductDetails />);
+    renderProductDetails();
 
     expect(await screen.findByText("Broker Portfolio")).toBeInTheDocument();
 
