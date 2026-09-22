@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const ListRoot = styled.ol`
   list-style: none;
 
   & li + li {
-    border-top: 1px solid var(--white-5, rgba(255, 255, 255, 0.05));
+    border-top: 1px solid var(--white-5);
   }
 
   & li:first-child {
@@ -15,17 +15,17 @@ const ListRoot = styled.ol`
     border-bottom-left-radius: calc(var(--spacing) * 1);
     border-bottom-right-radius: calc(var(--spacing) * 1);
   }
-`;
+`
 
 const ListItem = styled.li`
   display: flex;
-  min-height: 57px;
+  min-height: var(--row-min-height);
   padding: 0 calc(var(--spacing) * 2);
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
-  background: var(--Greys-Positive-Jet, #191a1c);
-`;
+  background: var(--surface-list-item);
+`
 
 export const List = {
   Root: ListRoot,

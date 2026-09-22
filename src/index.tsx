@@ -1,15 +1,33 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import ProductDetails from "./product-details/page";
-import "./globals.css";
+import { ApolloProvider } from '@apollo/client/react'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './globals.css'
+import { createApolloClient } from './graphql/client'
+import ProductDetails from './product-details/page'
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <div className={"container"}>
-      <ProductDetails />
-    </div>
-  </React.StrictMode>
-);
+async function enableApiMocking() {
+  if (import.meta.env.VITE_GRAPHQL_MOCK !== 'true') {
+    return
+  }
+
+  const { worker } = await import('./mocks/browser')
+  await worker.start({
+    onUnhandledRequest: 'bypass',
+  })
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+
+enableApiMocking().then(() => {
+  const client = createApolloClient()
+
+  root.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <div className={'container'}>
+          <ProductDetails />
+        </div>
+      </ApolloProvider>
+    </React.StrictMode>,
+  )
+})

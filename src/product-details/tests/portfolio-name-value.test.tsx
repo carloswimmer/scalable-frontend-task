@@ -1,8 +1,7 @@
-import { render, Screen, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { PortfolioNameValue } from "../components/portfolio-name-value"
-
-import "@testing-library/jest-dom"
+import '@testing-library/jest-dom'
+import { render, type Screen, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { PortfolioNameValue } from '../components/portfolio-name-value'
 
 type User = ReturnType<typeof userEvent.setup>
 
@@ -10,7 +9,7 @@ const label = {
   edit: 'Edit portfolio name',
   save: 'Save portfolio name',
   cancel: 'Cancel editing portfolio name',
-  input: 'Portfolio name'
+  input: 'Portfolio name',
 }
 
 async function enterEditMode(user: User) {
@@ -34,7 +33,9 @@ describe('PortfolioNameValue', () => {
 
   beforeEach(() => {
     user = userEvent.setup()
-    render(<PortfolioNameValue initialState="Broker Portfolio" onSave={jest.fn()} />)
+    render(
+      <PortfolioNameValue initialState="Broker Portfolio" onSave={vi.fn()} />,
+    )
   })
 
   it('renders the initial portfolio name', () => {
@@ -116,7 +117,9 @@ describe('PortfolioNameValue', () => {
     await user.type(input, 'BP')
     await user.click(getSaveButton(screen))
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Minimum of 3 characters')
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Minimum of 3 characters',
+    )
   })
 
   it('shows an error when try to save name with more than 50 caracters', async () => {
@@ -124,9 +127,14 @@ describe('PortfolioNameValue', () => {
 
     const input = getInput(screen)
     await user.clear(input)
-    await user.type(input, '0123456789 0123456789 0123456789 0123456789 0123456789')
+    await user.type(
+      input,
+      '0123456789 0123456789 0123456789 0123456789 0123456789',
+    )
     await user.click(getSaveButton(screen))
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Maximum of 50 characters')
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Maximum of 50 characters',
+    )
   })
 })

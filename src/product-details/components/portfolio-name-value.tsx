@@ -1,30 +1,34 @@
-import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Pencil as EditIcon } from "../../assets/Pencil";
-import styled from "styled-components";
-import { Save as SaveIcon } from "../../assets/Save";
-import { Cancel as CancelIcon } from "../../assets/Cancel";
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { Cancel as CancelIcon } from '../../assets/Cancel'
+import { Pencil as EditIcon } from '../../assets/Pencil'
+import { Save as SaveIcon } from '../../assets/Save'
+import { focusRingVisible } from '../../styles/focus-ring'
 
 interface PortfolioNameValueProps {
-  initialState: string,
-  onSave: (name: string) => void,
+  initialState: string
+  onSave: (name: string) => Promise<string | undefined> | string | undefined
 }
 
-export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueProps) => {
+export const PortfolioNameValue = ({
+  initialState,
+  onSave,
+}: PortfolioNameValueProps) => {
   const [name, setName] = useState(initialState)
   const [isEditing, setIsEditing] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // To keep name as the source of truth, we need to update it when the initial state changes
   useEffect(() => {
-    if (isEditing) {
-      inputRef.current?.focus()
-      inputRef.current?.select()
-    }
-  }, [isEditing])
+    setName(initialState)
+  }, [initialState])
 
   const openEdit = () => {
     if (inputRef.current) {
       inputRef.current.value = name
+      inputRef.current?.focus()
+      inputRef.current?.select()
     }
     setIsEditing(true)
   }
@@ -37,7 +41,7 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
     setErrorMessage('')
   }
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     const newName = inputRef.current?.value.trim()
 
     if (!newName || newName.length < 3) {
@@ -51,8 +55,12 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
     }
 
     if (newName !== name) {
+      const apiError = await onSave(newName)
+      if (apiError) {
+        setErrorMessage(apiError)
+        return
+      }
       setName(newName)
-      onSave(newName)
     }
 
     setIsEditing(false)
@@ -98,9 +106,9 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
       <ActionsSlot>
         <ActionGroup $visible={!isEditing}>
           <div>
-            <EditButton 
+            <EditButton
               type="button"
-              onClick={openEdit} 
+              onClick={openEdit}
               tabIndex={isEditing ? -1 : 0}
               aria-label="Edit portfolio name"
             >
@@ -111,17 +119,17 @@ export const PortfolioNameValue = ({ initialState, onSave }: PortfolioNameValueP
 
         <ActionGroup $visible={isEditing}>
           <div>
-            <SaveButton 
+            <SaveButton
               type="button"
-              onClick={handleSaveName} 
-              tabIndex={isEditing ? 0 : -1} 
+              onClick={handleSaveName}
+              tabIndex={isEditing ? 0 : -1}
               aria-label="Save portfolio name"
             >
               <SaveIcon />
             </SaveButton>
-            <CancelButton 
+            <CancelButton
               type="button"
-              onClick={closeEdit} 
+              onClick={closeEdit}
               tabIndex={isEditing ? 0 : -1}
               aria-label="Cancel editing portfolio name"
             >
@@ -164,7 +172,9 @@ const NameText = styled.span<{ $visible: boolean }>`
   display: grid;
   grid-template-columns: ${({ $visible }) => ($visible ? '1fr' : '0fr')};
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: grid-template-columns 0.3s ease, opacity 0.2s ease;
+  transition:
+    grid-template-columns var(--duration-normal) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
   overflow: hidden;
 
   & > span {
@@ -178,7 +188,9 @@ const ActionGroup = styled.div<{ $visible: boolean }>`
   grid-template-columns: ${({ $visible }) => ($visible ? '1fr' : '0fr')};
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   pointer-events: ${({ $visible }) => ($visible ? 'auto' : 'none')};
-  transition: grid-template-columns 0.3s ease, opacity 0.3s ease;
+  transition:
+    grid-template-columns var(--duration-normal) var(--ease-standard),
+    opacity var(--duration-normal) var(--ease-standard);
   overflow: hidden;
 
   & > div {
@@ -194,6 +206,10 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   flex-shrink: 0;
+
+  &:focus-visible {
+    ${focusRingVisible}
+  }
 `
 
 const EditButton = styled(Button)`
@@ -228,6 +244,15 @@ const Input = styled.input`
   padding-inline: calc(var(--spacing) * 1.5);
   border: none;
   border-radius: var(--spacing);
+  background: var(--surface-input);
+  color: var(--white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semi-bold);
+  font-family: inherit;
+
+  &:focus-visible {
+    ${focusRingVisible}
+  }
 `
 
 const InputWrapper = styled.div<{ $expanded: boolean }>`
@@ -235,7 +260,9 @@ const InputWrapper = styled.div<{ $expanded: boolean }>`
   min-width: 0;
   max-width: ${({ $expanded }) => ($expanded ? '100%' : '0')};
   opacity: ${({ $expanded }) => ($expanded ? 1 : 0)};
-  transition: max-width 0.3s ease, opacity 0.2s ease;
+  transition:
+    max-width var(--duration-normal) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
   overflow: hidden;
 `
 

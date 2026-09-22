@@ -1,4 +1,4 @@
-export const Cancel = () => {
+export const ArrowLeft = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,11 +10,11 @@ export const Cancel = () => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-x-icon lucide-x"
+      className="lucide lucide-arrow-left preview-icon"
       aria-hidden="true"
     >
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
+      <path d="m12 19-7-7 7-7" />
+      <path d="M19 12H5" />
     </svg>
   )
 }
