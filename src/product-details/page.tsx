@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ArrowLeft } from '../assets/ArrowLeft'
 import { PORTFOLIO_ID } from '../graphql/constants'
 import { focusRingVisible } from '../styles/focus-ring'
 import { CashAccount } from './components/cash-account'
@@ -21,9 +22,9 @@ const Header = styled.div`
 `
 
 const BackButton = styled.a`
-  color: var(--white);
-  width: calc(var(--spacing) * 3);
-  height: calc(var(--spacing) * 3);
+  color: var(--white-60);
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -58,7 +59,7 @@ export default function ProductDetails() {
     <>
       <Header>
         <BackButton href="/" aria-label={'Go Back'}>
-          {'<'}
+          <ArrowLeft />
         </BackButton>
         <h1>{'Product Details'}</h1>
       </Header>
