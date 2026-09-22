@@ -10,8 +10,14 @@ const RowContent = styled.div`
   font-size: var(--font-size-sm);
 `
 
+const RowLinkContent = styled(RowContent)`
+  padding-block: calc(var(--spacing) * 2);
+  gap: var(--spacing);
+  font-weight: var(--font-weight-semi-bold);
+`
+
 const RowLabel = styled.span`
-  color: var(--White-60, rgba(255, 255, 255, 0.6));
+  color: var(--white-60);
   font-style: normal;
   font-weight: var(--font-weight-normal);
   line-height: normal;
@@ -28,12 +34,13 @@ const RowValue = styled.span`
   width: stretch;
   font-weight: var(--font-weight-semi-bold);
   color: var(--white);
-  line-height: 20px;
-  letter-spacing: 0.15px;
+  line-height: var(--line-height-row-value);
+  letter-spacing: var(--letter-spacing-row-value);
 `
 
 export const Row = {
   Content: RowContent,
+  LinkContent: RowLinkContent,
   Label: RowLabel,
   Value: RowValue,
 }

@@ -1,26 +1,7 @@
 import type { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { List } from '../../components/list'
 import { Row } from '../../components/row'
-
-const Header2 = styled.h2`
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--white-60);
-  margin-bottom: calc(var(--spacing) * 2);
-  margin-top: calc(var(--spacing) * 3);
-`
-
-const ClickableRowContent = styled.div`
-  display: flex;
-  padding: 16px 0;
-  align-items: center;
-  gap: 8px;
-  flex: 1 0 0;
-  align-self: stretch;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semi-bold);
-`
+import { SectionHeading } from '../../components/section-heading'
 
 interface CashAccountProps {
   portfolioId: string
@@ -37,7 +18,7 @@ export const CashAccount: FunctionComponent<CashAccountProps> = ({
 }) => {
   return (
     <>
-      <Header2 id="cash-account">{'Cash account'}</Header2>
+      <SectionHeading id="cash-account">{'Cash account'}</SectionHeading>
       <List.Root aria-labelledby={'cash-account'}>
         <List.Item>
           <Row.Content>
@@ -53,7 +34,7 @@ export const CashAccount: FunctionComponent<CashAccountProps> = ({
         </List.Item>
         {allOnboardingStepsCompleted && (
           <List.Item>
-            <ClickableRowContent>
+            <Row.LinkContent>
               <a
                 href={`/cockpit/cash-allocation?portfolioId=${portfolioId}`}
                 target="_blank"
@@ -61,7 +42,7 @@ export const CashAccount: FunctionComponent<CashAccountProps> = ({
               >
                 {'Cash Balance Allocation'}
               </a>
-            </ClickableRowContent>
+            </Row.LinkContent>
           </List.Item>
         )}
       </List.Root>

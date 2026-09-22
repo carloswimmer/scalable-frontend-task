@@ -1,15 +1,7 @@
 import type { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { List } from '../../components/list'
 import { Row } from '../../components/row'
-
-const Header2 = styled.h2`
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--white-60);
-  margin-bottom: calc(var(--spacing) * 2);
-  margin-top: calc(var(--spacing) * 3);
-`
+import { SectionHeading } from '../../components/section-heading'
 
 interface SecuritiesAccountProps {
   securitiesAccountNumber?: string | null
@@ -22,7 +14,9 @@ export const SecuritiesAccount: FunctionComponent<SecuritiesAccountProps> = ({
 }) => {
   return (
     <>
-      <Header2 id={'Securities Account'}>{'Securities account'}</Header2>
+      <SectionHeading id={'Securities Account'}>
+        {'Securities account'}
+      </SectionHeading>
       <List.Root aria-labelledby={'Securities Account'}>
         <List.Item>
           <Row.Content>

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { PORTFOLIO_ID } from '../graphql/constants'
+import { focusRingVisible } from '../styles/focus-ring'
 import { CashAccount } from './components/cash-account'
 import { PortfolioName } from './components/portfolio-name'
 import { SecuritiesAccount } from './components/securities-account'
@@ -8,7 +9,7 @@ import { usePortfolio } from './hooks/use-portfolio'
 const Header = styled.div`
   margin-top: calc(var(--spacing) * 5);
   margin-bottom: calc(var(--spacing) * 5);
-  min-height: 64px;
+  min-height: var(--header-min-height);
   display: flex;
   align-items: center;
   gap: calc(var(--spacing) * 2);
@@ -23,15 +24,13 @@ const BackButton = styled.a`
   color: var(--white);
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
-  outline-offset: 2px;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:focus-visible {
-    outline: 2px solid transparent;
-    box-shadow: 0px 0px 0px 1px var(--woodsmoke), 0px 0px 0px 3px var(--white);
+    ${focusRingVisible}
   }
 `
 
